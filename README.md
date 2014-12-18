@@ -1,4 +1,11 @@
-pubnub-rickshaw-memory.js
-=========================
+process.memoryUsage()#
+Returns an object describing the memory usage of the Node process measured in bytes.
 
-Publish the memory usage of a nodeJS instance in pubnub-rickshaw format
+var util = require('util');
+
+console.log(util.inspect(process.memoryUsage()));
+This will generate:
+
+{ rss: 4935680,
+  heapTotal: 1826816,
+  heapUsed: 650472 }
