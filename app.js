@@ -34,6 +34,8 @@ setInterval(function(){
 
 }, 500);
 
+
+// server
 var express = require('express');
 var server = express(); // better instead
 server.use(express.static(__dirname + '/public'));
@@ -49,6 +51,7 @@ function makeid() {
     return text;
 }
 
+// blocker
 setInterval(function(){
 
   console.log('ENCRYPTING');
@@ -65,7 +68,7 @@ setInterval(function(){
   }
 
   var i=0;
-  while(i < 1000000) {
+  while(i < 1000) {
     encrypt(makeid());
     i++;
   }

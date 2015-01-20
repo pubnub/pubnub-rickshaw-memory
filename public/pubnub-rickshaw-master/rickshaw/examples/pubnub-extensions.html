@@ -221,10 +221,10 @@ var init = function() {
 new Rickshaw.Fixtures.PubNub({
   subscribe_key: 'demo',
   channel: 'pubnub-brainpower',
-  history: false,
+  history: true,
   graph: graph,
   connect: init,
-  limit: 50
+  limit: 100
 });
 
 </script>
