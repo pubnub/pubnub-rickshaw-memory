@@ -220,7 +220,7 @@ var init = function() {
 
 new Rickshaw.Fixtures.PubNub({
   subscribe_key: 'demo',
-  channel: 'pubnub-brainpower',
+  channel: window.location.search.slice(1),
   history: true,
   graph: graph,
   connect: init,

@@ -4,13 +4,14 @@
   "description": "Publish your nodeJS memory usage right to pubnub-rickshaw front-end.",
   "main": "app.js",
   "dependencies": {
+    "colors": "^1.0.3",
+    "express": "^3.19.1",
+    "node-uuid": "^1.4.2",
     "pubnub": "^3.7.8"
   },
-  "devDependencies": {
-    "express": "^4.11.1"
-  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test"
   },
   "repository": {
     "type": "git",

@@ -1,32 +1,29 @@
 var pnrickmem = require('./app');
 
-// server
-var express = require('express');
+pnrickmem.init({
+  dev: true,
+  port: 1337
+});
 
-var server = express();
-server.use(express.static(__dirname + '/public'));
-server.listen(3000);
+console.log('- starting encryption loop to illustrate memory deviation');
 
-if (process.pid) {
-  console.log('This process is your pid ' + process.pid);
-}
-
-// console.log('This platform is ' + process.platform);
-
+// a super slow function
 function makeid() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for( var i=0; i < 5; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    return text;
+  for( var i=0; i < 5; i++ )
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+
 }
 
-// blocker
+// increase memory usage artificially
 setInterval(function(){
 
-  console.log('ENCRYPTING');
+  console.log('-- encrypting');
 
   var crypto = require('crypto'),
       algorithm = 'aes-256-ctr',
@@ -40,11 +37,11 @@ setInterval(function(){
   }
 
   var i=0;
-  while(i < 1000) {
+  while(i < 10000) {
     encrypt(makeid());
     i++;
   }
 
-  console.log('DONE');
+  console.log('-- sleep');
 
 }, 5000);
