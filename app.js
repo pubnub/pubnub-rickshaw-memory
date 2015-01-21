@@ -1,102 +1,58 @@
-var util = require('util');
 var pubnub = require('pubnub');
 
-var pubnub = require("pubnub")({
-    publish_key   : "demo",
-    subscribe_key : "demo"
-});
+module.exports = function() {
 
-if (process.pid) {
-  console.log('This process is your pid ' + process.pid);
-}
+  var self = this;
+  var mem = false;
+  var default_channel = 'pubnub-rickshaw';
 
-console.log('This platform is ' + process.platform);
+  var publish_key = "demo";
+  var channel = default_channel;
+  var interval_timeout = 1000;
 
-
-var megabyte = 1024 * 1024;
-setInterval(function(){
-
-  var mem = process.memoryUsage();
-
-  console.log(mem.heapUsed / megabyte);
-
-  pubnub.publish({
-    channel: 'pubnub-brainpower',
-    message: {
-      y: [
-        Math.ceil(mem.rss / megabyte * 100) / 100, 
-        Math.ceil(mem.heapTotal / megabyte * 100) / 100,
-        Math.ceil(mem.heapUsed / megabyte * 100) / 100
-      ],
-      x: new Date().getTime() / 1000
-    }
+  var pubnub = require("pubnub")({
+    publish_key: publish_key
   });
 
-}, 500);
+  var megabyte = 1024 * 1024;
+  var interval = false;
+  
+  var publish_mem = function() {
+    
+    mem = process.memoryUsage();
 
+    pubnub.publish({
+      channel: channel,
+      message: {
+        y: [
+          Math.ceil(mem.rss / megabyte * 100) / 100, 
+          Math.ceil(mem.heapTotal / megabyte * 100) / 100,
+          Math.ceil(mem.heapUsed / megabyte * 100) / 100
+        ],
+        x: new Date().getTime() / 1000
+      }
+    });
 
-// server
-var express = require('express');
-var server = express(); // better instead
-server.use(express.static(__dirname + '/public'));
-server.listen(3000);
+  };
+  
+  self.start = function() {
+    interval = setInterval(publish_mem, interval_timeout);
+  };
 
-function makeid() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  self.stop = function() {
+    clearInterval(interval);
+  };
 
-    for( var i=0; i < 5; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+  self.init = function(options) {
 
-    return text;
-}
+    publish_key = options.publish_key || "demo";
+    channel = options.channel || default_channel;
+    interval_timeout = options.timeout || "1000";
+    
+    self.start();
 
-// blocker
-setInterval(function(){
+  };
 
-  console.log('ENCRYPTING');
+  return self;
 
-  var crypto = require('crypto'),
-      algorithm = 'aes-256-ctr',
-      password = makeid();
-
-  function encrypt(text){
-    var cipher = crypto.createCipher(algorithm,password)
-    var crypted = cipher.update(text,'utf8','hex')
-    crypted += cipher.final('hex');
-    return crypted;
-  }
-
-  var i=0;
-  while(i < 1000) {
-    encrypt(makeid());
-    i++;
-  }
-
-  console.log('DONE');
-
-}, 5000);
-
-
-// And regarding rss, vsize, heapTotal, heapUsed... vsize is the entire size of 
-// memory that your process is using and rss is how much of that is in actual 
-// physical RAM and not swap. heaptotal and heapUsed refer to v8's underlying 
-// storage that you have no control of. You'll mostly be concerned with vsize, 
-// but you can also get more detailed information with top or Activity Monitor
-// on OS X (anyone know of good process visualization tools on *nix systems?
-
-  /*
-
-  vsize = virtual size a.k.a. total size, pages may be lazily loaded or
-  swapped out
-  rss = residential set a.k.a. the pages that are actually in memory,
-  subset of vsize
-  heap(Total|Used) = the chunk of memory that's used for dynamic
-  allocations, also a subset of the vsize
-
-  Heap: Current heap size (MB)
-
-RSS: Resident set size (MB)
-
-V8 Full GC: Heap size sampled immediately after a full garbage collection (MB)
-*/
+};
