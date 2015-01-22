@@ -15,7 +15,7 @@ npm install pubnub-rickshaw-memory
 Include in your app with ```{dev: true}```.
 
 ```js
-var pnrickmem = require('./app');
+var pnrickmem = require('pubnub-rickshaw-memory');
 pnrickmem.init({dev: true});
 ```
 
