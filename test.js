@@ -1,8 +1,7 @@
 var pnrickmem = require('./app');
 
 pnrickmem.init({
-  dev: true,
-  port: 1337
+  dev: true
 });
 
 console.log('- starting encryption loop to illustrate memory deviation');
