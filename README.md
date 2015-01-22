@@ -1,6 +1,6 @@
 # PubNub-Rickshaw-Memory
 
-![](http://i.imgur.com/Ecowbb1.png)
+![](http://i.imgur.com/yDsJL0X.gif)
 
 Monitor your NodeJS memory usage with PubNub. Plugs right into [pubnub-rickshaw](https://github.com/pubnub/pubnub-rickshaw) for easy realtime charts.
 
@@ -34,6 +34,8 @@ http://localhost:1337?pnrickmem-bff2c45e-ab44-4204-92e3-bd69048502c0
 ```
 
 Visit the url to see a realtime graph of your NodeJS memory profile over time.
+
+![](http://i.imgur.com/Ecowbb1.png)
 
 ## Options
 
