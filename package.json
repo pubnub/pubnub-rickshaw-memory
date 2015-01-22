@@ -1,6 +1,6 @@
 {
   "name": "pubnub-rickshaw-memory",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Publish your nodeJS memory usage right to pubnub-rickshaw front-end.",
   "main": "app.js",
   "dependencies": {
