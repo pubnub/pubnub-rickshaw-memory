@@ -44,8 +44,9 @@ Sent as an object during ```init()```.
 ```
 pnrickmem.init({
   publish_key: 'demo',
+  subscribe_key : 'demo',
   channel: uuid(),
-  interval_timeout: 1000
+  interval_timeout: 1000,
   dev_mode: false,
   port: 3333
 });
@@ -54,6 +55,7 @@ pnrickmem.init({
 | Parameter|Details|Type|Default|
 |------------------|-----------------------------------------------------------------|---------|------------------|
 | publish_key      | Your PubNub publish key                                         | string  | ```'demo'```     |
+| subscribe_key    | Your PubNub subscribe key                                       | string  | ```'demo'```     |
 | channel          | Your PubNub channel                                             | string  | ```uuid.v4();``` |
 | interval_timeout | Delay between memory publishes                                  | integer | ```1000```       |
 | dev_mode         | Enable development mode                                         | boolean | ```false```      |
@@ -61,7 +63,7 @@ pnrickmem.init({
 
 ## How it works
 
-NodeJS memory usage is exposed through ```process.memoryUsage()```. 
+NodeJS memory usage is exposed through ```process.memoryUsage()```.
 
 Every ```interval_timeout``` the module publishes the current output of ```process.memoryUsage()``` to the supplied ```publish_key``` and ```channel``` on the PubNub network. [Read more about PubNub here](http://pubnub.com).
 
