@@ -44,9 +44,9 @@ Sent as an object during ```init()```.
 ```
 pnrickmem.init({
   publish_key: 'demo',
-  subscribe_key : 'demo'
+  subscribe_key : 'demo',
   channel: uuid(),
-  interval_timeout: 1000
+  interval_timeout: 1000,
   dev_mode: false,
   port: 3333
 });
