@@ -7,14 +7,16 @@ var mem = false;
 
 // set defaults
 var publish_key = "demo";
+var subscribe_key = "demo";
 var channel = 'pnrickmem-' + uuid.v4();
 var interval_timeout = 1000;
 var dev_mode = false;
 var port = 3345;
 
 // init pubnub
-var pubnub = require("pubnub")({
-  publish_key: publish_key
+var pubnub = new PubNub({
+  publishKey: publish_key,
+  subscribeKey: subscribe_key
 });
 
 var megabyte = 1024 * 1024;
@@ -26,7 +28,7 @@ var publish_mem = function() {
 
   // publish to pubnub
   pubnub.publish({
-    channel: channel,
+    channels: [channel],
     message: {
       y: [
         Math.ceil(mem.rss / megabyte * 100) / 100, 
@@ -34,6 +36,14 @@ var publish_mem = function() {
         Math.ceil(mem.heapUsed / megabyte * 100) / 100
       ],
       x: new Date().getTime() / 1000
+    },
+    function (status, response) {
+      if (status.error) {
+        // handle publish error, as required
+      } 
+      else {
+        // handle publish success, if needed
+      }
     }
   });
 
@@ -73,6 +83,7 @@ var init = function(options) {
   if(typeof options !== "undefined") {
   
     publish_key = options.publish_key || publish_key;
+    subscribe_key = options.subscribe_key || subscribe_key;
     channel = options.channel || channel;
     interval_timeout = options.timeout || interval_timeout;
     dev_mode = options.dev || dev_mode;
