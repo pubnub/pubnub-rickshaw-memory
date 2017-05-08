@@ -44,6 +44,7 @@ Sent as an object during ```init()```.
 ```
 pnrickmem.init({
   publish_key: 'demo',
+  subscribe_key: 'demo',
   channel: uuid(),
   interval_timeout: 1000
   dev_mode: false,
@@ -54,6 +55,7 @@ pnrickmem.init({
 | Parameter|Details|Type|Default|
 |------------------|-----------------------------------------------------------------|---------|------------------|
 | publish_key      | Your PubNub publish key                                         | string  | ```'demo'```     |
+| subscribe_key    | Your PubNub subscribe key                                       | string  | ```'demo'```     |
 | channel          | Your PubNub channel                                             | string  | ```uuid.v4();``` |
 | interval_timeout | Delay between memory publishes                                  | integer | ```1000```       |
 | dev_mode         | Enable development mode                                         | boolean | ```false```      |
